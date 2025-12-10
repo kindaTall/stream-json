@@ -242,4 +242,18 @@ sjson_status_t sjson_AddFloatToArray(sjson_context_t *ctx, float value);
  */
 sjson_status_t sjson_AddStringToArray(sjson_context_t *ctx, const char *value);
 
+/**
+ * Start nested object in current array
+ * @param ctx JSON context
+ * @return SJSON_OK or error code
+ */
+sjson_status_t sjson_AddObjectToArray(sjson_context_t *ctx);
+
+/**
+ * Start nested array in current array
+ * @param ctx JSON context
+ * @return SJSON_OK or error code
+ */
+sjson_status_t sjson_AddArrayToArray(sjson_context_t *ctx);
+
 #endif /* STREAM_JSON_H */

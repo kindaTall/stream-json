@@ -658,3 +658,65 @@ sjson_status_t sjson_AddStringToArray(sjson_context_t *ctx, const char *value)
 
     return write_char(ctx, '"');
 }
+
+sjson_status_t sjson_AddObjectToArray(sjson_context_t *ctx)
+{
+    if (!ctx)
+    {
+        return SJSON_ERROR_INVALID_PARAM;
+    }
+
+    sjson_status_t status = check_array_state(ctx);
+    if (status != SJSON_OK)
+        return status;
+
+    if (ctx->depth >= ctx->max_depth)
+    {
+        return SJSON_ERROR_MAX_DEPTH;
+    }
+
+    status = add_comma_if_needed(ctx);
+    if (status != SJSON_OK)
+        return status;
+
+    status = write_char(ctx, '{');
+    if (status != SJSON_OK)
+        return status;
+
+    ctx->depth_stack[ctx->depth] = '}';
+    ctx->depth++;
+    ctx->needs_comma[ctx->depth] = false;
+
+    return SJSON_OK;
+}
+
+sjson_status_t sjson_AddArrayToArray(sjson_context_t *ctx)
+{
+    if (!ctx)
+    {
+        return SJSON_ERROR_INVALID_PARAM;
+    }
+
+    sjson_status_t status = check_array_state(ctx);
+    if (status != SJSON_OK)
+        return status;
+
+    if (ctx->depth >= ctx->max_depth)
+    {
+        return SJSON_ERROR_MAX_DEPTH;
+    }
+
+    status = add_comma_if_needed(ctx);
+    if (status != SJSON_OK)
+        return status;
+
+    status = write_char(ctx, '[');
+    if (status != SJSON_OK)
+        return status;
+
+    ctx->depth_stack[ctx->depth] = ']';
+    ctx->depth++;
+    ctx->needs_comma[ctx->depth] = false;
+
+    return SJSON_OK;
+}
