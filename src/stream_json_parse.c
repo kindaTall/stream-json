@@ -69,12 +69,6 @@ int find_key_value_pair(json_parse_state_t *p_state)
         return -1;
     }
 
-    if (!p_state->state == PARSE_STATE_SEEKING_KEY)
-    {
-        ESP_LOGE(TAG, "Invalid initial state for JSON parsing: %d", p_state->state);
-        return -1; // Invalid initial state
-    }
-
     const char *current_data_ptr = p_state->parse_buffer;
     size_t current_data_len = p_state->parse_buffer_len;
 
